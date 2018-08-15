@@ -3,6 +3,7 @@
 
 Example usage:
 
+```c#
 // Deterine the GraphQL types schema.
 var schemaIntrospector = new GraphQLSchemaInterrogator();
 string schema = await schemaIntrospector.ExecuteGraphQLSchemaQueryAsync(
@@ -13,5 +14,6 @@ string schema = await schemaIntrospector.ExecuteGraphQLSchemaQueryAsync(
 var classBuilder = new GraphQLTypesClassBuilder();
 var types = classBuilder.ParseTypes(schema);
 var model = classBuilder.CoalesceToModel(types);
-var classContents = classBuilder.WriteModelToClass(model, "Something.Api.Models");
+string classContents = classBuilder.WriteModelToClass(model, "Something.Api.Models");
 System.IO.File.WriteAllText(@"C:\Temp\SomethingApiModels.cs", classContents);
+```

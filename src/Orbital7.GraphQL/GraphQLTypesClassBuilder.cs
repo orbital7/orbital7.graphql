@@ -246,8 +246,8 @@ namespace Orbital7.GraphQL
             sb.AppendLine("{");
 
             WriteEnumTypes(model.Enums, sb);
-            WriteInterfaceTypes(model.Interfaces, sb);
-            WriteObjectTypes(model.Objects, sb);
+            WriteInterfaceTypes(model.Interfaces, model.Enums, sb);
+            WriteObjectTypes(model.Objects, model.Enums, sb);
 
             sb.AppendLine("}");
             return sb.ToString();
@@ -271,6 +271,7 @@ namespace Orbital7.GraphQL
 
         private void WriteInterfaceTypes(
             List<GraphQLType> interfaces, 
+            List<GraphQLType> enumTypes,
             StringBuilder sb)
         {
             foreach (var type in interfaces)
@@ -278,7 +279,7 @@ namespace Orbital7.GraphQL
                 WriteDescription(type.Description, sb);
                 sb.AppendFormat("\tpublic interface {0}", type.Name).AppendLine();
                 sb.AppendLine("\t{");
-                WriteTypeFields(type.Fields, sb);
+                WriteTypeFields(type.Fields, enumTypes, sb);
                 sb.AppendLine("\t}");
                 sb.AppendLine();
             }
@@ -286,6 +287,7 @@ namespace Orbital7.GraphQL
 
         private void WriteObjectTypes(
             List<GraphQLType> objects, 
+            List<GraphQLType> enumTypes,
             StringBuilder sb)
         {
             foreach (var type in objects)
@@ -308,7 +310,7 @@ namespace Orbital7.GraphQL
 
                 sb.AppendFormat("\tpublic class {0}{1}", type.Name, interfaces).AppendLine();
                 sb.AppendLine("\t{");
-                WriteTypeFields(type.Fields, sb, "public ");
+                WriteTypeFields(type.Fields, enumTypes, sb, "public ");
 
                 if (type.ContainsField("name"))
                     WriteToString("Name", sb);
@@ -335,6 +337,7 @@ namespace Orbital7.GraphQL
 
         private void WriteTypeFields(
             List<GraphQLField> fields, 
+            List<GraphQLType> enumTypes,
             StringBuilder sb, 
             string modifier = null)
         {
@@ -345,11 +348,11 @@ namespace Orbital7.GraphQL
                 if (!isFirst)
                     sb.AppendLine();
 
-                var fieldType = GetFieldDatatype(field.TypeName);
+                var fieldType = GetFieldDatatype(field.TypeName, enumTypes);
                 if (String.IsNullOrEmpty(fieldType))
                 {
                     if (field.TypeKind == "LIST")
-                        fieldType = String.Format("List<{0}>", GetFieldDatatype(field.OfTypeName));
+                        fieldType = String.Format("List<{0}>", GetFieldDatatype(field.OfTypeName, enumTypes));
                 }
                 sb.AppendFormat("\t\t[JsonProperty(\"{0}\")]", field.Name).AppendLine();
                 sb.AppendFormat("\t\t{0}{1} {2}", modifier, fieldType, field.Name.CapitalizeFirstLetter()).AppendLine(" { get; set; }");
@@ -359,7 +362,8 @@ namespace Orbital7.GraphQL
         }
 
         private string GetFieldDatatype(
-            string fieldTypeKind)
+            string fieldTypeKind,
+            List<GraphQLType> enumTypes)
         {
             if (String.IsNullOrEmpty(fieldTypeKind))
                 return null;
@@ -387,7 +391,13 @@ namespace Orbital7.GraphQL
                     return "DateTime?";
 
                 default:
-                    return fieldTypeKind;
+                    var isEnumType = (from x in enumTypes
+                                      where x.Name == fieldTypeKind
+                                      select x).FirstOrDefault() != null;
+                    if (isEnumType)
+                        return fieldTypeKind + "?";
+                    else
+                        return fieldTypeKind;
             }
         }
 

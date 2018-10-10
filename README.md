@@ -1,6 +1,8 @@
 # orbital7.graphql
 .NET Standard 2.0 library for creating C# model classes for use with an external GraphQL API
 
+Nuget Package: Orbital7.GraphQL
+
 Example usage:
 
 ```c#

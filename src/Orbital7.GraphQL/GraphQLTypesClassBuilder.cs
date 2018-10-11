@@ -331,7 +331,7 @@ namespace Orbital7.GraphQL
             sb.AppendLine();
             sb.AppendLine("\t\tpublic override string ToString()");
             sb.AppendLine("\t\t{");
-            sb.AppendFormat("\t\t\treturn this.{0};", propertyName).AppendLine();
+            sb.AppendFormat("\t\t\treturn this.{0}?.ToString();", propertyName).AppendLine();
             sb.AppendLine("\t\t}");
         }
 

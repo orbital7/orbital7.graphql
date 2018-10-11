@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Josh van Eikeren</Authors>
+    <Company>Orbital7</Company>
+    <Description>.NET Standard 2.0 library for creating C# model classes for use with an external GraphQL API</Description>
+    <PackageProjectUrl>https://github.com/orbital7/orbital7.graphql</PackageProjectUrl>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/15078943</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/orbital7/orbital7.graphql/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © 2018 Orbital7</Copyright>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

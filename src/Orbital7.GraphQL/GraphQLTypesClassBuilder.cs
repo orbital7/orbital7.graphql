@@ -248,6 +248,7 @@ namespace Orbital7.GraphQL
             WriteEnumTypes(model.Enums, sb);
             WriteInterfaceTypes(model.Interfaces, model.Enums, sb);
             WriteObjectTypes(model.Objects, model.Enums, sb);
+            WriteObjectTypes(model.InputObjects, model.Enums, sb);
 
             sb.AppendLine("}");
             return sb.ToString();

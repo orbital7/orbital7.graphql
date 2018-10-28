@@ -10,9 +10,9 @@
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/15078943</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/orbital7/orbital7.graphql/blob/master/LICENSE</PackageLicenseUrl>
     <Copyright>Copyright © 2018 Orbital7</Copyright>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

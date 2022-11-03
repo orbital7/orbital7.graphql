@@ -7,8 +7,8 @@ Example usage:
 
 ```c#
 // Deterine the GraphQL types schema.
-var schemaIntrospector = new GraphQLSchemaInterrogator();
-string schema = await schemaIntrospector.ExecuteGraphQLSchemaQueryAsync(
+var schemaInterrogator = new GraphQLSchemaInterrogator();
+string schema = await schemaInterrogator.ExecuteGraphQLSchemaQueryAsync(
   "https://api.something.com/graphql",
   "MY_API_KEY");
 
